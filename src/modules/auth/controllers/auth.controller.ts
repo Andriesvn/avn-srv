@@ -1,14 +1,14 @@
-import { Controller, Post, HttpStatus, HttpCode, Get } from '@nestjs/common';
+import {Controller, Post, HttpStatus, HttpCode, Get, Res, Req} from '@nestjs/common';
 import {AuthService} from "../components/auth.service";
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('token')
-  @HttpCode(HttpStatus.OK)
-  public async getToken() {
-    return await this.authService.createToken();
+
+  @Post()
+  public async login(@Req() req,@Res() res) {
+    return this.authService.login(req,res);
   }
 
   @Get('authorized')

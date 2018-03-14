@@ -1,6 +1,6 @@
 import * as passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Component } from '@nestjs/common';
+import {Component} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 
 const EXPIRES_IN_MINUTES = 60 * 24;
@@ -15,7 +15,7 @@ export class JwtStrategy extends Strategy {
   constructor(private readonly authService: AuthService) {
     super(
       {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: ExtractJwt.fromHeader("authorization"),
         passReqToCallback: true,
         secretOrKey: SECRET,
         issuer: ISSUER,
@@ -33,10 +33,11 @@ export class JwtStrategy extends Strategy {
   }
 
   public async verify(req, payload, done) {
-    const isValid = await this.authService.validateUser(payload);
-    if (!isValid) {
-      return done('Unauthorized', false);
+    //THIS WILL ONLY BE THE USERID
+    const user = await this.authService.validateUser(payload);
+    if (!user) {
+      return done("INVALID USER", false);
     }
-    done(null, payload);
+    done(null, user);
   }
 }

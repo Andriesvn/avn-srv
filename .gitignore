@@ -36,6 +36,12 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Idea Directory
+.idea/
+
+# Data Directory
+.data/
+
 # Typescript v1 declaration files
 typings/
 
@@ -57,3 +63,8 @@ typings/
 # dotenv environment variables file
 .env
 
+.idea/workspace.xml
+
+# db files
+*.db
+.idea/workspace.xml
