@@ -1,10 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="http://kamilmysliwiec.com/public/nest-logo.png#1" alt="Nest Logo" /></a>
-</p>
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework **TypeScript** starter repository. 
+REALTIME REST SERVER BUILD WITH NEST AND TYPEORM
+
+STILL IN DEVELOPMENT, NOT FOR PRODUCTION USE
   
 ## Installation
 
@@ -17,3 +15,10 @@ $ npm install
 ```
 $ npm run start
 ```
+
+## FEATURES PLANNED:
+RESTFULL API                                                           - IMPLEMENTED (NEEDS WORK)
+USER AND ROLE RECORD LEVEL ACL                                         - IMPLEMENTED (NEEDS WORK)
+REALTIME PUBSUB ON WEBSOCKETS                                          - PLANED
+REPLICATION OF SUBSETS OF DATA TO ALLOW OFFLINE SUB-SERVERS TO BE USED - PLANED
+CLIENT LIBRARY TO COMUNICATE WITH SERVER OVER WEBSOCKETS               - PLANED
