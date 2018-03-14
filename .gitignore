@@ -37,10 +37,10 @@ node_modules/
 jspm_packages/
 
 # Idea Directory
-.idea/
+.idea
 
 # Data Directory
-.data/
+.data
 
 # Typescript v1 declaration files
 typings/
@@ -67,4 +67,6 @@ typings/
 
 # db files
 *.db
+.idea/workspace.xml
+src/modules/database/database.module.ts
 .idea/workspace.xml

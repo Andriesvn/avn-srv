@@ -188,7 +188,9 @@ export class ModelHelperService {
 
        let modelname = modelMetaData.name;
        let options = _.get(query, "srvoptions");
-       if (!options) options = {};
+       if (!options) options = {count: 0};
+       //COUNT VALUE KEEPS TRACK OF THE NUMBER OF TIMES WE ADDED A WHERE CAUSE. THIS HELPS WITH INJECTING PARAMETERS.
+       if (!options.count) options.count = 0;
        let parameters = [];
 
        if (!wherelist || wherelist.length == 0)return query;
@@ -213,7 +215,7 @@ export class ModelHelperService {
                    //CHECK IF THIS RELATION HAS NOT BEEN ADDED YET
                    if (_.indexOf(options.relations,field[0]) == -1){
                        //IF IT HAS NOT, ADD IT
-                       query.innerJoin(`${modelname}.${field[0]}`, `${field[0]}`)
+                       query.innerJoin(`${modelname}.${field[0]}`, `${field[0]}${options.count}`)
                        options.relations.push(field[0]);
                        _.set(query, "srvoptions", options);
                    }
@@ -228,29 +230,29 @@ export class ModelHelperService {
            }
            //TODO: MOVE THIS TO A DIFFERENT FUNCTION SO IT CAN BE REUSED LATER ON.
            switch (where.opp){
-               case "EQ": strWhre = strWhre + `= :${where.field}`;
+               case "EQ": strWhre = strWhre + `= :${where.field}${options.count}`;
                    break;
-               case "!EQ": strWhre = strWhre + `<> :${where.field}`;
+               case "!EQ": strWhre = strWhre + `<> :${where.field}${options.count}`;
                    break;
-               case "IN": strWhre = strWhre + `IN (:${where.field})`;
+               case "IN": strWhre = strWhre + `IN (:${where.field}${options.count})`;
                    break;
-               case "!IN": strWhre = strWhre + `NOT IN (:${where.field})`;
+               case "!IN": strWhre = strWhre + `NOT IN (:${where.field}${options.count})`;
                    break;
-               case "LIKE": strWhre = strWhre + `LIKE :${where.field}`;
+               case "LIKE": strWhre = strWhre + `LIKE :${where.field}${options.count}`;
                    break;
-               case "!LIKE": strWhre = strWhre + `NOT LIKE :${where.field}`;
+               case "!LIKE": strWhre = strWhre + `NOT LIKE :${where.field}${options.count}`;
                    break;
                case "!GTE":
-               case "LT": strWhre = strWhre + `< :${where.field}`;
+               case "LT": strWhre = strWhre + `< :${where.field}${options.count}`;
                    break;
                case "!GT":
-               case "LTE": strWhre = strWhre + `<= :${where.field}`;
+               case "LTE": strWhre = strWhre + `<= :${where.field}${options.count}`;
                    break;
                case "!LTE":
-               case "GT": strWhre = strWhre + `> :${where.field}`;
+               case "GT": strWhre = strWhre + `> :${where.field}${options.count}`;
                    break;
                case "!LT":
-               case "GTE": strWhre = strWhre + `>= :${where.field}`;
+               case "GTE": strWhre = strWhre + `>= :${where.field}${options.count}`;
                    break;
                case "NUL": strWhre = strWhre + `IS NULL`;
                    break;
@@ -270,7 +272,7 @@ export class ModelHelperService {
                    finWhre += ' AND ' + strWhre;
                else finWhre += ' OR ' + strWhre;
            }
-           query.setParameter(where.field ,where.value);
+           query.setParameter(`${where.field}${options.count}` ,where.value);
        });
 
        finWhre += ')';
@@ -283,7 +285,8 @@ export class ModelHelperService {
                query.andWhere(finWhre);
        }
        //SET THE VALUEs FOR THE WHERE
-
+       options.count += 1;
+       _.set(query, "srvoptions", options);
        return query;
    }
 

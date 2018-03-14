@@ -85,9 +85,9 @@ export class DatabaseModule implements NestModule {
 
   private seedUsers(){
       const repository = this.connection.getRepository('user');
-      let users =[repository.create({email: "andriesvn@avntech.net",first_name: "Andries",last_name : "van Niekerk",password:"!2580654",enabled:true,roles: [{id:"SYSADMIN"}], acl:[{id:"FULLACCESS"}] })];
-      users.push(repository.create({email: "user@test.net",first_name: "User",last_name : "num 1",password:"!2580654",enabled:true,roles: [{id:"SUBADMIN"}]}));
-      users.push(repository.create({email: "user2@test.net",first_name: "User",last_name : "num 1",password:"!2580654",enabled:true,roles: [{id:"USER"}]}));
+      let users =[repository.create({email: "andriesvn@avntech.net",first_name: "Andries",last_name : "van Niekerk",password:"12345",enabled:true,roles: [{id:"SYSADMIN"}], acl:[{id:"FULLACCESS"}] })];
+      users.push(repository.create({email: "user@test.net",first_name: "User",last_name : "num 1",password:"12345",enabled:true,roles: [{id:"SUBADMIN"}]}));
+      users.push(repository.create({email: "user2@test.net",first_name: "User",last_name : "num 2",password:"12345",enabled:true,roles: [{id:"USER"}]}));
       repository.save(users);
   }
 
